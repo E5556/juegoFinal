@@ -10,7 +10,7 @@ class Personaje():
         # aqui se almacena la hora actual en milisegundos desde que se inicio pygame
         self.update_time = pygame.time.get_ticks()  # Tiempo de actualizacion de la animacion
         self.image = animaciones[self.frame_index]
-        self.forma = pygame.Rect(0, 0, Constantes.ALTO_PERSONAJE,Constantes.ANCHO_PERSONAJE)
+        self.forma = self.image.get_rect()  # Crear un rectangulo alrededor del personaje
         self.forma.center = (x, y)
 
     def movimiento(self, delta_x, delta_y): # Funcion para mover al personaje
@@ -38,8 +38,6 @@ class Personaje():
     def dibujar(self, interfaz):    # Funcion para dibujar al personaje
         imagen_flip = pygame.transform.flip(self.image, self.flip, False)   # Voltear la imagen si es necesario
         interfaz.blit(imagen_flip, self.forma)  # Dibujar al personaje en la pantalla
-
-
         #pygame.draw.rect(interfaz,  Constantes.COLOR_PERSONAJE,self.forma, width=1)    # Dibujar un rectangulo alrededor del personaje
 
 

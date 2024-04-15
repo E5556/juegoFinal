@@ -1,6 +1,27 @@
+capitulo 5 gestion de balas
+
+# Autores:
+#Karen
+#Jose
+#Jairo
+#Edward
+
+# Fecha: 2024/abril/15
+# Versión de Python:
+# Versión de Pygame:
+
+
+
+
+
+
+
+
+
 import pygame
 import Constantes
-from Personaje import Personaje # Importar la clase Personaje del archivo Personaje.py
+from Personaje import Personaje       # Importar la clase Personaje del archivo Personaje.py
+from weapon import Weapon     # Importar la clase Weapon del archivo Weapon.py
 
 pygame.init()   # Inicializar pygame
 ventana  = pygame.display.set_mode((Constantes.ANCHO_VENTANA, Constantes.ALTO_VENTANA)) # Crear la ventana
@@ -13,18 +34,27 @@ def escalar_img(image, scale): # Funcion para escalar una imagen
     nueva_imagen = pygame.transform.scale(image, (w*scale, h*scale))
     return nueva_imagen
 
+
+# importar imagenes
+
+# personaje
 animaciones =[]
 for i in range(1, 9):
-    img = pygame.image.load(f"assets//images//characters//player//TheGuy//RunAnimation48x48//{i}RunAnimation.png")             # Cargar la imagen del jugador
+    img = pygame.image.load(f"assets//images//characters//player//TheGuy//RunAnimation48x48//{i}RunAnimation.png").convert_alpha()             # Cargar la imagen del jugador
     img = escalar_img(img, Constantes.SCALA_PERSONAJE) # Escalar la imagen del jugador
     animaciones.append(img)
 
+# arma
+imagen_pistola = pygame.image.load(f"assets//images//weapons//WeaponsB.png").convert_alpha() # Cargar la imagen del arma
+imagen_pistola = escalar_img(imagen_pistola, Constantes.SCALA_ARMA) # Escalar la imagen del arma
 
 
-
+# crear un jugador de la clase Personaje
 jugador = Personaje(50, 50, animaciones)  # Crear un objeto de la clase Personaje
 
 
+# crear un arma de la clase Weapon
+pistola = Weapon(imagen_pistola)  # Crear un objeto de la clase Weapon
 
 
 # definir las variables de movimiento del jugador
@@ -41,16 +71,8 @@ reloj = pygame.time.Clock()
 
 run = True  # Variable para el bucle principal
 while run == True:  # Bucle principal
-
-
-
     #que vaya a 60 cuadros por segundo
     reloj.tick(Constantes.FPS)
-
-
-
-
-
     ventana.fill(Constantes.COLOR_BG) # Pintar el fondo
 
 
@@ -77,10 +99,18 @@ while run == True:  # Bucle principal
     # mover el jugador
     jugador.movimiento(delta_x, delta_y)
 
-    jugador.update() # Actualizar la animacion del jugador
+    # Actualizar la animacion del jugador
+    jugador.update()
 
+    # Actualizar el estado del arma
+    pistola.update(jugador)
 
+    # dibujar al jugador
     jugador.dibujar(ventana) # Dibujar el jugador
+
+
+    # dibujar al arma
+    pistola.dibujar(ventana) # Dibujar el arma
 
 
     for event in pygame.event.get():    # Recorrer los eventos
