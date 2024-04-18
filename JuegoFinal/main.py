@@ -1,4 +1,4 @@
-capitulo 5 gestion de balas
+#capitulo 5 gestion de balas
 
 # Autores:
 #Karen
